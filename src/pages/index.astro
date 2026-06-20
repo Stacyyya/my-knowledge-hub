@@ -1,8 +1,21 @@
 ---
+import Layout from '../layouts/Layout.astro';
+import IndexLabel from '../components/IndexLabel.astro';
+import SectionLink from '../components/SectionLink.astro';
+import { getCollection } from 'astro:content';
+
+const skills = await getCollection('skills');
+const vibe = await getCollection('vibe');
 ---
-<html lang="ko">
-  <head><meta charset="utf-8" /><title>Knowledge Hub</title></head>
-  <body>
-    <h1>Knowledge Hub — 준비 중</h1>
-  </body>
-</html>
+<Layout title="Stacy — Knowledge Hub">
+  <IndexLabel n="001" label="INDEX" />
+  <p class="meta accent" style="margin-top:18px;">designer / daily builder</p>
+  <h1 class="display" style="margin-top:4px;">I make<br />things,<br /><span style="color:var(--muted)">a lot.</span></h1>
+  <p class="meta" style="margin-top:20px; line-height:1.9;">
+    ↳ 스킬을 빚고, 매일 코딩하고,<br />&nbsp;&nbsp;&nbsp;만든 걸 여기 모은다.
+  </p>
+  <nav style="margin-top:40px; border-top:1px solid var(--border); padding-top:18px; display:flex; gap:28px; flex-wrap:wrap;">
+    <SectionLink label="SKILLS" href="/skills" count={skills.length} />
+    <SectionLink label="VIBE" href="/vibe" count={vibe.length} />
+  </nav>
+</Layout>
