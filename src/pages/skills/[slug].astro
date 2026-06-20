@@ -1,0 +1,35 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const skills = await getCollection('skills');
+  return skills.map((s) => ({ params: { slug: s.id }, props: { entry: s } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+<Layout title={`${entry.data.title} — Skills`}>
+  <a class="meta" href="/skills">← SKILLS</a>
+  <h1 class="display" style="margin-top:18px; font-size:clamp(36px,8vw,56px);">{entry.data.title}</h1>
+  <p class="meta accent" style="margin-top:12px;">{entry.data.summary}</p>
+  {entry.data.tags.length > 0 && (
+    <p class="meta" style="margin-top:8px;">{entry.data.tags.map((t) => `#${t}`).join('  ')}</p>
+  )}
+  {entry.data.download && (
+    <a class="download" href={entry.data.download} download>↓ 다운로드</a>
+  )}
+  <article class="prose">
+    <Content />
+  </article>
+</Layout>
+<style>
+  .download { display:inline-block; margin-top:20px; border:1px solid var(--accent); color:var(--accent); padding:8px 16px; font-size:13px; }
+  .download:hover { background:var(--accent); color:var(--bg); }
+  .prose { margin-top:36px; border-top:1px solid var(--border); padding-top:24px; }
+  .prose :global(h2) { font-size:16px; margin-top:24px; color:var(--accent); }
+  .prose :global(p) { font-size:14px; margin-top:12px; }
+  .prose :global(ul) { margin-top:12px; padding-left:20px; font-size:14px; }
+  .prose :global(li) { margin-top:6px; }
+</style>

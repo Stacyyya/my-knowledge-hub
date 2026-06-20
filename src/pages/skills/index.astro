@@ -1,0 +1,20 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import IndexLabel from '../../components/IndexLabel.astro';
+import SkillCard from '../../components/SkillCard.astro';
+import { getCollection } from 'astro:content';
+
+const skills = (await getCollection('skills')).sort((a, b) =>
+  a.data.title.localeCompare(b.data.title)
+);
+---
+<Layout title="Skills — Knowledge Hub">
+  <a class="meta" href="/">← INDEX</a>
+  <h1 class="display" style="margin-top:18px;">Skills.</h1>
+  <p class="meta" style="margin-top:12px;">내가 만든 스킬 {skills.length}개 — 가져가서 쓰세요.</p>
+  <div style="margin-top:36px;">
+    {skills.map((s) => (
+      <SkillCard id={s.id} title={s.data.title} summary={s.data.summary} tags={s.data.tags} />
+    ))}
+  </div>
+</Layout>

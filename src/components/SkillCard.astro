@@ -1,0 +1,21 @@
+---
+interface Props { id: string; title: string; summary: string; tags: string[]; }
+const { id, title, summary, tags } = Astro.props;
+---
+<a class="skill-card" href={`/skills/${id}`}>
+  <div class="row">
+    <h3>{title}</h3>
+    <span class="arrow">→</span>
+  </div>
+  <p class="summary">{summary}</p>
+  {tags.length > 0 && <p class="tags">{tags.map((t) => `#${t}`).join('  ')}</p>}
+</a>
+<style>
+  .skill-card { display:block; border-top:1px solid var(--border); padding:18px 0; }
+  .skill-card:hover h3 { color: var(--accent); }
+  .row { display:flex; justify-content:space-between; align-items:baseline; }
+  h3 { font-size:18px; font-weight:600; }
+  .arrow { color: var(--muted); }
+  .summary { color: var(--fg); font-size:13px; margin-top:6px; }
+  .tags { color: var(--muted); font-size:11px; margin-top:8px; letter-spacing:1px; }
+</style>
