@@ -1,0 +1,11 @@
+---
+interface Props { label: string; href: string; count?: number; }
+const { label, href, count } = Astro.props;
+---
+<a class="section-link" href={href}>
+  → {label}{count !== undefined && <span class="count"> {count}</span>}
+</a>
+<style>
+  .section-link { font-size: 13px; font-weight: 600; letter-spacing: 1px; }
+  .count { color: var(--muted); }
+</style>

@@ -1,0 +1,55 @@
+---
+interface Props { title: string; }
+const { title } = Astro.props;
+---
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Nanum+Gothic+Coding:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <main>
+      <slot />
+    </main>
+    <footer>
+      <span>© Stacy — Knowledge Hub</span>
+    </footer>
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    --bg: #0c0c0c;
+    --fg: #ededed;
+    --muted: #6e6e6e;
+    --accent: #f0883e;
+    --border: #2a2a2a;
+    --font: 'JetBrains Mono', 'Nanum Gothic Coding', monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { background: var(--bg); }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  main { max-width: 880px; margin: 0 auto; padding: 64px 22px 96px; }
+  a { color: var(--fg); text-decoration: none; }
+  a:hover { color: var(--accent); }
+  /* 타이포 리듬 */
+  .display { font-size: clamp(48px, 11vw, 80px); line-height: 0.92; letter-spacing: -2px; font-weight: 700; }
+  .label { font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: var(--muted); }
+  .meta { font-size: 11px; color: var(--muted); }
+  .accent { color: var(--accent); }
+  footer { border-top: 1px solid var(--border); color: var(--muted); font-size: 10px; letter-spacing: 2px; text-transform: uppercase; padding: 24px 22px; max-width: 880px; margin: 0 auto; }
+</style>
