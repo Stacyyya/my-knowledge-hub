@@ -1,0 +1,21 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import VibeCard from '../../components/VibeCard.astro';
+import { getCollection } from 'astro:content';
+
+const vibe = (await getCollection('vibe')).sort((a, b) => b.data.day - a.data.day);
+---
+<Layout title="Vibe Coding — Knowledge Hub">
+  <a class="meta" href="/">← INDEX</a>
+  <h1 class="display" style="margin-top:18px;">Vibe<br />Coding.</h1>
+  <p class="meta" style="margin-top:12px;">매일 만든 것들 — {vibe.length}개의 쇼케이스.</p>
+  <div class="grid">
+    {vibe.map((v) => (
+      <VibeCard id={v.id} title={v.data.title} day={v.data.day} cover={v.data.cover} oneLiner={v.data.oneLiner} />
+    ))}
+  </div>
+</Layout>
+<style>
+  .grid { margin-top:36px; display:grid; grid-template-columns:repeat(2, 1fr); gap:18px; }
+  @media (max-width: 560px) { .grid { grid-template-columns: 1fr; } }
+</style>

@@ -1,0 +1,22 @@
+---
+interface Props { id: string; title: string; day: number; cover: string; oneLiner: string; }
+const { id, title, day, cover, oneLiner } = Astro.props;
+---
+<a class="vibe-card" href={`/vibe/${id}`}>
+  <div class="thumb"><img src={cover} alt={title} loading="lazy" /></div>
+  <div class="info">
+    <span class="meta">DAY {day}</span>
+    <h3>{title}</h3>
+    <p class="oneliner">{oneLiner}</p>
+  </div>
+</a>
+<style>
+  .vibe-card { display:block; border:1px solid var(--border); }
+  .vibe-card:hover { border-color: var(--accent); }
+  .thumb { aspect-ratio: 8/5; overflow:hidden; background:#000; }
+  .thumb img { width:100%; height:100%; object-fit:cover; display:block; }
+  .info { padding:14px 16px; }
+  .info h3 { font-size:16px; font-weight:600; margin-top:4px; }
+  .vibe-card:hover h3 { color: var(--accent); }
+  .oneliner { font-size:12px; color:var(--muted); margin-top:6px; }
+</style>
