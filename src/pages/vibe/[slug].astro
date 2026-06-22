@@ -18,10 +18,12 @@ const dateStr = d.date.toISOString().slice(0, 10);
   <h1 class="display" style="margin-top:4px; font-size:clamp(36px,8vw,56px);">{d.title}</h1>
   <p class="meta" style="margin-top:12px;">{d.oneLiner}</p>
   <img class="cover" src={d.cover} alt={d.title} />
-  <div class="links">
-    {d.liveUrl && <a class="btn" href={d.liveUrl} target="_blank" rel="noopener">↗ 라이브</a>}
-    {d.repoUrl && <a class="btn" href={d.repoUrl} target="_blank" rel="noopener">↗ 저장소</a>}
-  </div>
+  {(d.liveUrl || d.repoUrl) && (
+    <div class="links">
+      {d.liveUrl && <a class="btn" href={d.liveUrl} target="_blank" rel="noopener noreferrer">↗ 라이브</a>}
+      {d.repoUrl && <a class="btn" href={d.repoUrl} target="_blank" rel="noopener noreferrer">↗ 저장소</a>}
+    </div>
+  )}
   {d.tools.length > 0 && <p class="meta" style="margin-top:16px;">TOOLS: {d.tools.join(' · ')}</p>}
   <article class="prose"><Content /></article>
 </Layout>
