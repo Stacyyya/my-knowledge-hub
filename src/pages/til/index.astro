@@ -35,7 +35,9 @@ const fmt = (d) => d.toISOString().slice(0, 10);
   .prose :global(p) { font-size:14px; margin-top:12px; }
   .prose :global(h3),
   .prose :global(strong) { color:var(--accent); }
-  .prose :global(ul) { margin-top:12px; padding-left:20px; font-size:14px; }
+  .prose :global(ul),
+  .prose :global(ol) { margin-top:12px; padding-left:22px; font-size:14px; }
   .prose :global(li) { margin-top:6px; }
+  .prose :global(a) { color:var(--accent); text-decoration:underline; text-underline-offset:2px; }
   .prose :global(code) { background:#1a1a1a; border:1px solid var(--border); padding:1px 6px; border-radius:3px; font-size:13px; }
 </style>

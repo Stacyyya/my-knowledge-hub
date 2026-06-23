@@ -12,6 +12,16 @@ tags: [figma, config, design-system, ai, watch]
 - DS팀 관점에서 유의미한 세션만 추려냄 (우리 일에 바로 연결되는 것 위주로).
 - 추린 결과를 **팀에 공유**까지 완료.
 
+**🩷 꼭 볼 세션 (영상 올라오면 `watch`로 분석)**
+
+1. [Your best practices are trapped in your head—and your AI has no idea](https://config.figma.com/san-francisco/session/dbf85ddc-ab1f-41cf-8b33-e488f14b55a7/) — Harald Kirschner (Microsoft)
+2. [Preparing Rocket for the AI era](https://config.figma.com/san-francisco/session/cc9f82eb-31cd-4bd3-93db-bb060c95a6ac/) — Emily Strobl · Will Hobick (Rocket)
+3. [AI gold: the first design system in Figma Make](https://config.figma.com/san-francisco/session/c856c21b-317e-482c-8a3f-f01280aeed56/) — Harvey Whiting (Meta)
+4. [The metacognitive design loop](https://config.figma.com/san-francisco/session/6c44950a-077d-47bf-bad1-8cc71f995957/) — Jenny Au · Mike Green (Epsilon/Publicis)
+5. [How structured thinking gives your AI superpowers](https://config.figma.com/san-francisco/session/ca0448a6-6274-455e-b32e-7ed465ed8e7a/) — Carola Pescio Canale (Atlassian)
+6. [Everyone's still eating: building Notion's design system](https://config.figma.com/san-francisco/session/9bbf68e9-0644-48df-9b6c-f4ad1827a146/) — Tamara Chu · Shauna Sapper (Notion)
+7. [In praise of dark mode](https://config.figma.com/san-francisco/session/404d5692-4463-4304-b74c-723a71e491a1/) — Mehmet Aydın Baytaş (Attio)
+
 **다짐**
 
 - 유튜브에 세션 영상이 올라오면 **최소 5개는 꼭 본다.** 라인업만 훑고 끝내지 않기.
