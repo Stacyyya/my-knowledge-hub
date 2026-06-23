@@ -25,4 +25,13 @@ const vibe = defineCollection({
   }),
 });
 
-export const collections = { skills, vibe };
+const til = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/til' }),
+  schema: z.object({
+    title: z.string(),
+    date: z.coerce.date(),
+    tags: z.array(z.string()).default([]),
+  }),
+});
+
+export const collections = { skills, vibe, til };

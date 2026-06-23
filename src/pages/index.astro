@@ -6,6 +6,7 @@ import { getCollection } from 'astro:content';
 
 const skills = await getCollection('skills');
 const vibe = await getCollection('vibe');
+const til = await getCollection('til');
 ---
 <Layout title="Stacy — Knowledge Hub">
   <IndexLabel n="001" label="INDEX" />
@@ -17,5 +18,6 @@ const vibe = await getCollection('vibe');
   <nav style="margin-top:40px; border-top:1px solid var(--border); padding-top:18px; display:flex; gap:28px; flex-wrap:wrap;">
     <SectionLink label="SKILLS" href="/skills" count={skills.length} />
     <SectionLink label="VIBE" href="/vibe" count={vibe.length} />
+    <SectionLink label="TIL" href="/til" count={til.length} />
   </nav>
 </Layout>

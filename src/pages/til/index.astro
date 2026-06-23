@@ -1,0 +1,41 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection, render } from 'astro:content';
+
+const entries = (await getCollection('til')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+const rendered = await Promise.all(
+  entries.map(async (e) => ({ data: e.data, Content: (await render(e)).Content }))
+);
+const fmt = (d) => d.toISOString().slice(0, 10);
+---
+<Layout title="TIL — Knowledge Hub">
+  <a class="meta" href="/">← INDEX</a>
+  <h1 class="display" style="margin-top:18px;">TIL.</h1>
+  <p class="meta" style="margin-top:12px;">오늘 시도한 것·배운 것 — {entries.length}개의 로그.</p>
+  <div class="log">
+    {rendered.map(({ data, Content }) => (
+      <article class="entry">
+        <div class="meta accent">{fmt(data.date)}</div>
+        <h2 class="entry-title">{data.title}</h2>
+        {data.tags.length > 0 && (
+          <p class="meta" style="margin-top:6px;">{data.tags.map((t) => `#${t}`).join('  ')}</p>
+        )}
+        <div class="prose"><Content /></div>
+      </article>
+    ))}
+  </div>
+</Layout>
+<style>
+  .log { margin-top:36px; }
+  .entry { padding:28px 0; border-top:1px solid var(--border); }
+  .entry-title { font-size:clamp(22px,4vw,28px); font-weight:700; letter-spacing:-0.5px; margin-top:8px; line-height:1.2; }
+  .prose { margin-top:16px; }
+  .prose :global(p) { font-size:14px; margin-top:12px; }
+  .prose :global(h3),
+  .prose :global(strong) { color:var(--accent); }
+  .prose :global(ul) { margin-top:12px; padding-left:20px; font-size:14px; }
+  .prose :global(li) { margin-top:6px; }
+  .prose :global(code) { background:#1a1a1a; border:1px solid var(--border); padding:1px 6px; border-radius:3px; font-size:13px; }
+</style>
