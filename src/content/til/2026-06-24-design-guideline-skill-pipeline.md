@@ -37,3 +37,21 @@ tags: [claude, skills, design-system, workflow]
 ```
 
 > DS에서 Figma 기반 디자인 시스템 작업을 하니까, claymint(컴포넌트/토큰)랑 Figma MCP도 연결해두면 예시 화면 만들 때 기존 디자인 시스템을 바로 꿰어 올 수 있다.
+
+**반전 — 그 스킬, Cowork엔 이미 있었다 😱**
+
+`--agent '*'`로 모든 앱에 깔리는지 확인하다가, **앱마다 스킬 폴더가 다르다**는 걸 또 한 번 체감했다.
+
+- `grill-with-docs`가 Cowork에서 "없는 스킬"로 뜬다. `npx skills add`는 Claude Code 계열 폴더(`~/.claude/skills`, `~/.agents/skills` 등)에만 깔렸고, **Cowork는 자기 전용 위치**(`.../local-agent-mode-sessions/skills-plugin/`)에서 Anthropic이 관리하는 플러그인/마켓플레이스 스킬을 로드한다. 즉 `npx skills` CLI는 Cowork를 설치 대상으로 인식하지 못한다.
+- 그런데 그 Cowork 스킬 목록을 열어보니 — `brand-guidelines`, `canvas-design`, `docx`, `pdf`, `pptx`, `mcp-builder`, `skill-creator`, `setup-cowork`, 그리고 **`design-guideline-builder`** 가 떡하니 있었다.
+
+`design-guideline-builder` 설명을 보면:
+
+> "우아한형제들(?)에서 디자인 시스템의 가이드라인 문서를 표준 구조에 맞춰 작성하도록 돕는 스킬. 컴포넌트/UX 패턴 가이드라인을 새로 만들거나 기존 걸 표준 뼈대에 맞춰 정리·검토…"
+
+이게 바로 우리가 *"0단계에서 `/write-a-skill`로 만들자"* 했던 표준 구조 스킬이다. **만들려던 게 Cowork엔 이미 들어 있었다.**
+
+**배운 것**
+
+- 새 스킬을 만들기 전에 **이미 깔린 스킬 목록부터 뒤져보자.** 특히 Cowork는 Claude Code와 폴더가 달라서 `npx skills`로 깐 것만 보면 절반만 보는 셈.
+- 그래도 헛수고는 아니었다 — 직접 파이프라인을 그려본 덕에 기성 `design-guideline-builder`가 뭘 해주는지, 어디에 `grill-with-docs`/`design-critique`를 끼울지 바로 판단이 선다.
