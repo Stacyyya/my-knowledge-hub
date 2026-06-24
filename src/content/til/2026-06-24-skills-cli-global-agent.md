@@ -1,6 +1,6 @@
 ---
 title: skills CLI의 --global / --agent 플래그를 이해했다
-date: 2026-06-25
+date: 2026-06-24
 tags: [claude, skills, cli]
 ---
 
