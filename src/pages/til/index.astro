@@ -9,14 +9,48 @@ const rendered = await Promise.all(
   entries.map(async (e) => ({ data: e.data, Content: (await render(e)).Content }))
 );
 const fmt = (d) => d.toISOString().slice(0, 10);
+
+// 기록이 있는 날짜별 글 개수 (캘린더 점 표시용)
+const counts = {};
+for (const e of entries) {
+  const k = fmt(e.data.date);
+  counts[k] = (counts[k] || 0) + 1;
+}
+// 캘린더 기본 표시 월 = 가장 최근 글이 있는 달
+const latest = entries.length ? entries[0].data : null;
+const defaultYear = latest ? latest.date.getUTCFullYear() : new Date().getUTCFullYear();
+const defaultMonth = latest ? latest.date.getUTCMonth() : new Date().getUTCMonth();
+const todayStr = fmt(new Date());
+
+// 같은 날짜 중 첫 글에만 앵커 id 부여
+const seen = new Set();
+const items = rendered.map(({ data, Content }) => {
+  const key = fmt(data.date);
+  const anchor = seen.has(key) ? null : key;
+  seen.add(key);
+  return { data, Content, key, anchor };
+});
 ---
 <Layout title="TIL — Knowledge Hub">
   <a class="meta" href="/">← INDEX</a>
   <h1 class="display" style="margin-top:18px;">TIL.</h1>
   <p class="meta" style="margin-top:12px;">오늘 시도한 것·배운 것 — {entries.length}개의 로그.</p>
+
+  <div class="cal">
+    <div class="cal-head">
+      <button id="cal-prev" class="cal-nav" aria-label="이전 달">‹</button>
+      <div id="cal-title" class="cal-title"></div>
+      <button id="cal-next" class="cal-nav" aria-label="다음 달">›</button>
+    </div>
+    <div class="cal-grid cal-dow">
+      <span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span>
+    </div>
+    <div id="cal-days" class="cal-grid"></div>
+  </div>
+
   <div class="log">
-    {rendered.map(({ data, Content }) => (
-      <article class="entry">
+    {items.map(({ data, Content, anchor }) => (
+      <article class="entry" id={anchor ? `til-${anchor}` : undefined}>
         <div class="meta accent">{fmt(data.date)}</div>
         <h2 class="entry-title">{data.title}</h2>
         {data.tags.length > 0 && (
@@ -27,7 +61,77 @@ const fmt = (d) => d.toISOString().slice(0, 10);
     ))}
   </div>
 </Layout>
+
+<script define:vars={{ counts, defaultYear, defaultMonth, todayStr }}>
+  let curY = defaultYear;
+  let curM = defaultMonth; // 0-based
+  const pad = (n) => String(n).padStart(2, '0');
+  const titleEl = document.getElementById('cal-title');
+  const daysEl = document.getElementById('cal-days');
+
+  function render() {
+    titleEl.textContent = `${curY}년 ${curM + 1}월`;
+    const firstDow = new Date(curY, curM, 1).getDay();
+    const daysInMonth = new Date(curY, curM + 1, 0).getDate();
+    daysEl.innerHTML = '';
+
+    for (let i = 0; i < firstDow; i++) {
+      const blank = document.createElement('span');
+      blank.className = 'cal-cell cal-blank';
+      daysEl.appendChild(blank);
+    }
+
+    for (let d = 1; d <= daysInMonth; d++) {
+      const dateStr = `${curY}-${pad(curM + 1)}-${pad(d)}`;
+      const n = counts[dateStr] || 0;
+      const cell = document.createElement(n > 0 ? 'a' : 'span');
+      cell.className = 'cal-cell';
+      if (dateStr === todayStr) cell.classList.add('is-today');
+      if (n > 0) {
+        cell.classList.add('has-entry');
+        cell.href = `#til-${dateStr}`;
+        cell.title = `${n}개의 기록`;
+      }
+      const num = document.createElement('span');
+      num.className = 'cal-num';
+      num.textContent = d;
+      cell.appendChild(num);
+      if (n > 0) {
+        const dot = document.createElement('span');
+        dot.className = 'cal-dot';
+        cell.appendChild(dot);
+      }
+      daysEl.appendChild(cell);
+    }
+  }
+
+  document.getElementById('cal-prev').addEventListener('click', () => {
+    curM--; if (curM < 0) { curM = 11; curY--; } render();
+  });
+  document.getElementById('cal-next').addEventListener('click', () => {
+    curM++; if (curM > 11) { curM = 0; curY++; } render();
+  });
+
+  render();
+</script>
 <style>
+  .cal { margin-top:32px; padding:18px; border:1px solid var(--border); border-radius:6px; max-width:420px; }
+  .cal-head { display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
+  .cal-title { font-size:15px; font-weight:700; letter-spacing:-0.3px; }
+  .cal-nav { background:none; border:none; color:var(--accent); font-size:22px; line-height:1; cursor:pointer; padding:0 8px; font-family:inherit; }
+  .cal-nav:hover { opacity:0.7; }
+  .cal-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:2px; }
+  .cal-dow { margin-bottom:6px; }
+  .cal-dow span { text-align:center; font-size:11px; color:var(--muted); padding:4px 0; }
+  .cal-cell { position:relative; display:flex; flex-direction:column; align-items:center; justify-content:center; aspect-ratio:1; font-size:13px; color:var(--muted); border-radius:50%; text-decoration:none; }
+  .cal-cell.has-entry { color:var(--fg, #e6e6e6); cursor:pointer; }
+  .cal-cell.has-entry:hover { background:#1a1a1a; }
+  .cal-cell.is-today { background:var(--accent); color:#0a0a0a; font-weight:700; }
+  .cal-cell.is-today.has-entry:hover { background:var(--accent); opacity:0.85; }
+  .cal-num { line-height:1; }
+  .cal-dot { width:4px; height:4px; border-radius:50%; background:var(--accent); margin-top:3px; }
+  .cal-cell.is-today .cal-dot { background:#0a0a0a; }
+
   .log { margin-top:36px; }
   .entry { padding:28px 0; border-top:1px solid var(--border); }
   .entry-title { font-size:clamp(22px,4vw,28px); font-weight:700; letter-spacing:-0.5px; margin-top:8px; line-height:1.2; }
