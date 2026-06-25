@@ -1,0 +1,32 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+<Layout title="About — Knowledge Hub">
+  <a class="meta" href="/">← INDEX</a>
+  <h1 class="display" style="margin-top:18px;">ABOUT.</h1>
+  <p class="meta accent" style="margin-top:12px;">designer / daily builder</p>
+
+  <div class="about">
+    <p>
+      디자이너이자 매일 무언가를 만드는 사람. 스킬을 빚고, 바이브 코딩으로
+      도구를 길들이고, 만든 걸 이 Knowledge Hub에 모은다.
+    </p>
+
+    <p class="meta soon">✎ 이 페이지는 찬찬히 정성스럽게 채워나갈 예정이에요.</p>
+
+    <!--
+      나중에 채울 섹션 메모 (원하는 것만 남기고 지우면 됨):
+      - 한 줄 소개 / 지금 하는 일
+      - 관심사 · 좋아하는 작업 방식
+      - 만든 것들 (대표 프로젝트 몇 개 링크)
+      - 연락처 / 링크 (GitHub, 메일, 링크드인 등 — 공개해도 되는 것만)
+      ※ 공개 사이트이므로 회사 내부정보·사번·비공개 연락처는 넣지 않기.
+    -->
+  </div>
+</Layout>
+<style>
+  .about { margin-top:32px; max-width:560px; }
+  .about p { font-size:15px; line-height:1.9; }
+  .about p + p { margin-top:18px; }
+  .soon { font-size:13px; color:var(--muted); border-top:1px solid var(--border); padding-top:18px; margin-top:28px; }
+</style>

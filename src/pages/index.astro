@@ -15,9 +15,17 @@ const til = await getCollection('til');
   <p class="meta" style="margin-top:20px; line-height:1.9;">
     ↳ 스킬을 빚고, 매일 코딩하고,<br />&nbsp;&nbsp;&nbsp;만든 걸 여기 모은다.
   </p>
+  <p class="meta" style="margin-top:18px;">
+    디자이너이자 매일 만드는 사람. <a class="about-link" href="/about">자세히 →</a>
+  </p>
   <nav style="margin-top:40px; border-top:1px solid var(--border); padding-top:18px; display:flex; gap:28px; flex-wrap:wrap;">
     <SectionLink label="SKILLS" href="/skills" count={skills.length} />
     <SectionLink label="VIBE" href="/vibe" count={vibe.length} />
     <SectionLink label="TIL" href="/til" count={til.length} />
+    <SectionLink label="ABOUT" href="/about" />
   </nav>
 </Layout>
+<style>
+  .about-link { color:var(--accent); text-decoration:underline; text-underline-offset:2px; }
+  .about-link:hover { opacity:0.75; }
+</style>
